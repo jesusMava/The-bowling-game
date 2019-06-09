@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bowling game</title>
+</head>
+<style>
+    body {
+        background-color: #cecece;
+    }
+    
+    h2 {
+        color: #ff6d05fc;
+        margin: 10px;
+        padding-top: 10px;
+    }
+    
+    .center {
+        text-align: center;
+        margin: 0 auto;
+        padding: 0;
+    }
+</style>
+
+<body>
+    <div class="center">
+        <h2>CodeKata: The bowling game</h2>
+        <table class="center">
+            <td id="tiros"></td>
+            <tr>
+                <td id="resultados"></td>
+            </tr>
+        </table><br> by: Jesús Macedo Vázquez
+    </div>
+
+    <script>
+        //Cargamos el array con los puntos
+        var array = [1, 4, 4, 5, 6, 4, 5, 5, 10, 0, 0, 1, 7, 3, 6, 4, 10, 0, 2, 8, 6];
+        //Declaramos variable 
+        var acomulador = 0;
+        var suma = 0;
+        var retorno;
+        var tablero;
+        // Función para comparar ya que no podemos usar la sentencia if
+        function comparar(suma, i) {
+            // En caso que la suma sea 10, sumamos el valor de i+1 del array y retornamos el valor
+            // En caso contrario no hacemos nada y retornamos el mismo valor de suma
+            // (Leer el problema Bowling game.)
+            switch (suma) {
+                case 10:
+                    suma = suma + array[i + 2];
+                    break;
+                default:
+                    break;
+            }
+            return suma;
+        }
+
+        // Recorrido del array, tomando de dos en 2 posiciones empezando de cero
+        for (i = 0; i < array.length - 1; i += 2) {
+            // tomamos el valor en la posición i (empezamos de cero y va de 2 en 2, 0,2,4,6...etc)
+            suma = array[i];
+            switch (suma) {
+                // Si la primera posición tiene un valor de 10 (chusa)
+                case 10:
+                    acomulador = acomulador + array[i + 2] + suma + array[i + 3];
+                    break;
+                default:
+                    //a suma le agregamos el valor de i+1 
+                    suma = suma + array[i + 1]
+                        // Mandamos a llamar la función y nos restorna un resultado, el cual lo agregamos a acomulador
+                    retorno = comparar(suma, i);
+                    acomulador = acomulador + retorno;
+                    break;
+            }
+            // Imprimimos los resultados agregandolos a la tabla
+            var tiros = document.getElementById("tiros");
+            var resultados = document.getElementById("resultados");
+            tiros.insertAdjacentHTML("beforebegin", "<th>" + array[i] + " " + array[i + 1] + "|</th>");
+            resultados.insertAdjacentHTML("beforebegin", "<td>" + acomulador + " </td>");
+        }
+    </script>
+</body>
+
+</html>
